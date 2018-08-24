@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: lachlanevenson/docker-make
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build Image
+          command: |
+            GIT_BRANCH=$CIRCLE_BRANCH make docker_build
+      - run:
+          name: Test Image
+          command: |
+            GIT_BRANCH=$CIRCLE_BRANCH make test
+      - run:
+          name: Publish Image
+          command: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            GIT_BRANCH=$CIRCLE_BRANCH make docker_push
