@@ -1,13 +1,13 @@
 FROM alpine
 
-LABEL maintainer="Patrick Foh <patrickfoh@gmailc.com>"
+LABEL maintainer="Patrick Foh <patrickfoh@gmail.com>"
 
 ARG VCS_REF
 ARG BUILD_DATE
 
 # Metadata
 LABEL org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.vcs-url="https://github.com/mrfoh/azurec" \
+      org.label-schema.vcs-url="https://github.com/mrfoh/azurecli-helm" \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.docker.dockerfile="/Dockerfile"
 # Set version
@@ -21,7 +21,7 @@ RUN \
   apk add --virtual=build gcc libffi-dev musl-dev openssl-dev python-dev make && \
   pip install azure-cli && \
   apk del --purge build 
-# Add helm
+# Add Helm
 RUN apk add --update ca-certificates \
  && apk add --update -t deps wget \
  && wget https://storage.googleapis.com/kubernetes-helm/helm-${HELM_LATEST_VERSION}-linux-amd64.tar.gz \
